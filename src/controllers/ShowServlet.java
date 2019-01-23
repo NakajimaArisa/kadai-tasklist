@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Tasks;
+import models.Task;
 import utils.DBUtil;
 
 /**
@@ -19,7 +19,7 @@ import utils.DBUtil;
 @WebServlet("/show")
 public class ShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,20 +28,20 @@ public class ShowServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
+        /**
+         * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+         */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
-        
-        Tasks t = em.find(Tasks.class, Integer.parseInt(request.getParameter("id")));
-        
+
+        Task t = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
+
         em.close();
-        
+
         request.setAttribute("task", t);
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");
-        rd.forward(request,response);
+        rd.forward(request, response);
     }
 
 }

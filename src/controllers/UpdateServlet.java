@@ -9,16 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Tasks;
+import models.Task;
 import utils.DBUtil;
-
 /**
  * Servlet implementation class UpdateServlet
  */
 @WebServlet("/update")
 public class UpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,18 +33,19 @@ public class UpdateServlet extends HttpServlet {
         String _token = (String)request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
-            
-            Tasks t = em.find(Tasks.class, (Integer)(request.getSession().getAttribute("task_id")));
-            
+
+            Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
+
             String content = request.getParameter("content");
             t.setContent(content);
-            
+
             em.getTransaction().begin();
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "更新が完了しました。");
             em.close();
-            
+
             request.getSession().removeAttribute("task_id");
-            
+
             response.sendRedirect(request.getContextPath() + "/index");
         }
     }
