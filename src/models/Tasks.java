@@ -10,25 +10,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-
 @NamedQueries({
-    @NamedQuery(
-            name = "getAllTasklist",
-            query = "SELECT t FROM Tasklist AS t ORDER BY t.id DESC"
-            )
+        @NamedQuery(
+                name = "getAllTasks",
+                query = "SELECT t FROM Tasks AS t ORDER BY t.id DESC"
+                )
 })
-
-
-@Table(name = "tasklist")
-public class Tasklist {
+@Table(name="tasks")
+public class Tasks {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(name = "content", length = 255, nullable = false)
+    
+    @Column(name = "content", length = 255, nullable = false )
     private String content;
-
 
     public Integer getId() {
         return id;
@@ -38,7 +34,6 @@ public class Tasklist {
         this.id = id;
     }
 
-
     public String getContent() {
         return content;
     }
@@ -46,6 +41,5 @@ public class Tasklist {
     public void setContent(String content) {
         this.content = content;
     }
-
-
+    
 }
